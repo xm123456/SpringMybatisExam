@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sakila.MybatisImpl.FilmDaoSp">
+    <resultMap type="com.sakila.Entity.Film" id="resultListCustomer">
+        <id column="film_id" property="film_id" />
+        <result column="title" property="title" />
+        <result column="description" property="description" />
+        <result column="language_id" property="language_id" />
+        <result column="active" property="active" />
+        <result column="create_date" property="create_date" />
+        <result column="last_update" property="last_update" />
+    </resultMap>
+    <select id="getByID_Film" parameterType="long" resultType="com.sakila.Entity.Film">
+        select * from film where film_id = #{ID}
+    </select>
+    <delete id="delByID_Film" parameterType="long" >
+       delete from film where film_id=#{ID}
+    </delete>
+    <update id="ModifyIdEntity_Film" parameterType="com.sakila.Entity.Film">
+        update film set language_id=#{language_id},last_update=#{last_update},title=#{title},description=#{description},active=#{active},create_date=#{create_date}where film_id=#{film_id}
+    </update>
+    <insert id="AddIdEntity_Film" parameterType="com.sakila.Entity.Film" >
+        insert into  customer(title,description,language_id,active,create_date,last_update) values(#{title},#{last_update},#{language_id},#{description},#{active},#{create_date})
+    </insert>
+    <select id="getBytitle_Film" resultMap="resultListFilm" >
+       select * from Film where title=#{title}
+    </select>
+    <select id="getLastFilm_Film" resultType="com.sakila.Entity.Film" >
+        select * from film a where a.film_id=(select max(b.film_id) from film b)
+    </select>
+</mapper>
